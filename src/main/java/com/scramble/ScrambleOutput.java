@@ -1,9 +1,12 @@
-package scramble;
+package com.scramble;
 
 import java.util.UUID;
 
 /**
  * POJO for the output.
+ * 
+ * Much like how ScrambleInput decodes its string on construction, ScrambleOutput
+ * encodes its strings as per project requirements during its construction.
  * @author AWS_admin
  *
  */
@@ -13,10 +16,10 @@ public class ScrambleOutput {
 	private final String b64Ciphertext;
 	private final String b64Key;
 	
-	public ScrambleOutput(UUID id, String c, String k){
+	public ScrambleOutput(UUID id, String cipher, String key){
 		this.taskID = id;
-		this.b64Ciphertext = c;
-		this.b64Key = k;
+		this.b64Ciphertext = Scramble.codec(cipher, 0);
+		this.b64Key = Scramble.codec(key, 0);
 	}
 	
 	public UUID getID(){
