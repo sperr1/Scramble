@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Universal POJO for the project. Will likely replace the individual classes
  * ScrambleInput and ScrambleOutput, but currently those two earn their keep
- * behind the scenes.
+ * behind the scenes. Plus the instructions ask for two kinds of POJOs so...
  * 
  * ScrambleObj is ideally suited for marshalling considering it's just a
  * collection of getters, setters, and the variables associated with them. 

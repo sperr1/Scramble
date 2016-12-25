@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>Scramble</name>
-	<description>Using Spring to encrypt strings</description>
+	<description>Using Spring to encrypt strings.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -46,5 +46,5 @@
 	</build>
 
 
-	<version>0.0.1.SNAPSHOT</version>
+	<version>1.0.0.WORKING</version>
 </project>

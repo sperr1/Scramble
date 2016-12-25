@@ -146,13 +146,13 @@ public class Scramble {
 		try{
 			if(mode == 0){
 				c.init(Cipher.ENCRYPT_MODE, Scramble.sks, c.getParameters());
-				System.out.println("ENCRYPTING");
+				//System.out.println("ENCRYPTING: "+input);
 				byte[] encode = c.doFinal(input.getBytes("UTF-8"));
 				String encryptedText = Base64.getEncoder().encodeToString(encode);
 				return encryptedText;
 			}else if(mode == 1){
 				c.init(Cipher.DECRYPT_MODE, Scramble.sks, c.getParameters());
-				System.out.println("DECRYPTING");
+				//System.out.println("DECRYPTING");
 				byte[] decode = Base64.getDecoder().decode(input);
 				String decryptedText = new String(c.doFinal(decode));
 				return decryptedText;
@@ -166,13 +166,19 @@ public class Scramble {
 			return null;
 		}
 	}
-
-	/*public static void main (String[] args){
+	/*
+	public static void main (String[] args){
 		try{
-			String e = Scramble.doAES("Shazbot", 0);
+			String e = Scramble.doAES("plaintextstringtoencrypttoAES", 0);
 			System.out.println(e);
 			String d = Scramble.doAES(e, 1);
 			System.out.println(d);
+			
+			String b = Scramble.codec("plaintextstringtoencrypttoAES", 0);
+			System.out.println(b);
+			String u = Scramble.codec(b, 1);
+			System.out.println(u);
+			String u2 = Scramble.codec(u, 1);
 		}catch(Exception ex){
 			System.out.println("ERROR: "+ex.toString());
 		}
