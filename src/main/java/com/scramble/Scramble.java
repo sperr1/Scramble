@@ -37,9 +37,30 @@ public class Scramble {
 	 * 
 	 * Anyway it's good form to have getters and setters where necessary. KEY gets a getter and nothing else
 	 * because it's a final variable.
+	 * 
+	 * EDIT: ACTUALLY WE'RE USING THE FIRST 16 BYTES OF THE SHA-1 OF DEADBEEF.
+	 * SO REALLY WE WANT TO COUGH UP THAT VALUE.
+	 * 
+	 * So in an act of sloppy-feeling design, we're going to have getKey run the init function
+	 * before doing anything (because why bother doing a try-throw-catch to make sure it's
+	 * been initialized if we can just init without worry?), and that'll make available to
+	 * us the variable 'sha,' which in the init function is set to those initial 16 bytes of
+	 * the sha-1 of DEADBEEF. Convert that to a string, then encode that string to b64, and
+	 * we get a printable string of the key we're using.
+	 * 
+	 * DEVNOTE: quick way to make this feel less sloppy is to just shove this block of code
+	 * underneath init(). I forget if it's proper form to do so, but I always figured you
+	 * should order functions so that you define them first before calling them, even though
+	 * Java at minimum doesn't really care (it all gets resolved in the compilation process
+	 * anyway, so it's more a matter of readability; define something before using something.)
+	 * OF COURSE I'M JUST GOING TO KEEP THIS HERE AS A SELF-REMINDER TO PLAN BETTER.
 	 */
 	public static String getKey(){
-		return Scramble.KEY;
+		//return Scramble.KEY; //The old approach was to just return the Key string
+		Scramble.init();
+		String out = new String(sha);
+		out = Scramble.codec(out, 0);
+		return out;
 	}
 
 	/*
@@ -166,8 +187,8 @@ public class Scramble {
 			return null;
 		}
 	}
-	/*
-	public static void main (String[] args){
+	
+	/*public static void main (String[] args){
 		try{
 			String e = Scramble.doAES("plaintextstringtoencrypttoAES", 0);
 			System.out.println(e);
@@ -178,7 +199,7 @@ public class Scramble {
 			System.out.println(b);
 			String u = Scramble.codec(b, 1);
 			System.out.println(u);
-			String u2 = Scramble.codec(u, 1);
+			System.out.println(Scramble.getKey());
 		}catch(Exception ex){
 			System.out.println("ERROR: "+ex.toString());
 		}
